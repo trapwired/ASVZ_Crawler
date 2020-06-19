@@ -113,6 +113,9 @@ venv.bak/
 # pycharm settings
 .idea
 
+# Secrets
+KEYS
+
 # Spyder project settings
 .spyderproject
 .spyproject
