@@ -116,6 +116,9 @@ venv.bak/
 # Secrets
 KEYS
 
+# geckodriver
+.exe
+
 # Spyder project settings
 .spyderproject
 .spyproject
