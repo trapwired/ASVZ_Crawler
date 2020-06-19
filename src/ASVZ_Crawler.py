@@ -1,10 +1,11 @@
 import os
+import time
+
 import KEYS
 
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
-from selenium.webdriver.support.ui import Select
 
 
 def page_has_loaded_id(browser, old_page):
@@ -56,13 +57,23 @@ def init_page(webpage):
         select_key = driver.find_element_by_name('Select')
         select_key.click()
 
+    # Fill out username and password field
     input_username = driver.find_element_by_id('username')
     input_username.send_keys(KEYS.USERNAME)
     input_password = driver.find_element_by_id('password')
     input_password.send_keys(KEYS.PASSWORD)
 
+    # submit data
     final_login_button = driver.find_element_by_name('_eventId_proceed')
     final_login_button.click()
+
+    # wait for reload to complete
+    while not webpage in driver.current_url:
+        time.sleep(10)
+
+    # click on register button
+    register_button = driver.find_element_by_id('btnRegister')
+    register_button.click()
 
 
 if __name__ == "__main__":
