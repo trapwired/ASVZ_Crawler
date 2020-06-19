@@ -114,10 +114,10 @@ venv.bak/
 .idea
 
 # Secrets
-KEYS
+KEYS.py
 
 # geckodriver
-.exe
+*.exe
 
 # Spyder project settings
 .spyderproject
