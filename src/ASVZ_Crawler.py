@@ -1,6 +1,7 @@
+import datetime
 import os
 import time
-
+import re
 import KEYS
 
 from selenium import webdriver
@@ -71,10 +72,25 @@ def init_page(webpage):
     while not webpage in driver.current_url:
         time.sleep(10)
 
+    # get Register-opens time
+    driver.implicitly_wait(10)  # seconds
+    description_text = driver.find_elements_by_class_name('ng-star-inserted')
+    register_opens = datetime.datetime.now()
+    for texts in description_text:
+        if "Online-Einschreibungen können ab " in texts.text:
+            text = texts.text.split('Online-Einschreibungen können ab ')
+            register_opens = datetime.datetime.strptime(text[0:16], "%d.%m.%Y %H:%M")
+            print(register_opens)
+            break
+        break
+    print('registering will open at {}'.format(register_opens))
+
     # click on register button
     register_button = driver.find_element_by_id('btnRegister')
     register_button.click()
+    driver.quit()
 
 
 if __name__ == "__main__":
-    init_page('https://schalter.asvz.ch/tn/lessons/86908')
+    init_page('https://schalter.asvz.ch/tn/lessons/116834')
+
