@@ -16,7 +16,7 @@ def page_has_loaded_id(browser, old_page):
     except NoSuchElementException:
         return False
 
-def init_page(webpage):
+def init_page(webpage, register):
     # get paths of geckodriver and Firefox exe
     gecko = os.path.normpath(os.path.join(os.path.dirname(__file__), 'geckodriver'))
     binary = FirefoxBinary(r'C:\Program Files\Mozilla Firefox\firefox.exe')
@@ -80,17 +80,17 @@ def init_page(webpage):
         if "Online-Einschreibungen können ab " in texts.text:
             text = texts.text.split('Online-Einschreibungen können ab ')
             register_opens = datetime.datetime.strptime(text[0:16], "%d.%m.%Y %H:%M")
-            print(register_opens)
+            return register_opens
             break
         break
-    print('registering will open at {}'.format(register_opens))
 
-    # click on register button
-    register_button = driver.find_element_by_id('btnRegister')
-    register_button.click()
+    if register:
+        # click on register button
+        register_button = driver.find_element_by_id('btnRegister')
+        register_button.click()
     driver.quit()
 
 
 if __name__ == "__main__":
-    init_page('https://schalter.asvz.ch/tn/lessons/116834')
+    init_page('https://schalter.asvz.ch/tn/lessons/116834', False)
 
