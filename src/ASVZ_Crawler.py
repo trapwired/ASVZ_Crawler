@@ -18,10 +18,10 @@ def page_has_loaded_id(browser, old_page):
 
 def init_page(webpage, register):
     # get paths of geckodriver and Firefox exe
-    gecko = os.path.normpath(os.path.join(os.path.dirname(__file__), 'geckodriver'))
-    binary = FirefoxBinary(r'C:\Program Files\Mozilla Firefox\firefox.exe')
+    # gecko = os.path.normpath(os.path.join(os.path.dirname(__file__), 'geckodriver'))
+    # binary = FirefoxBinary(r'C:\Program Files\Mozilla Firefox\firefox.exe')
     # Using Firefox to access web
-    driver = webdriver.Firefox(firefox_binary=binary, executable_path=gecko+'.exe')
+    driver = webdriver.Chrome()
     # Open the website
     driver.get(webpage)
     old_page = driver.find_element_by_tag_name('html')
@@ -77,8 +77,8 @@ def init_page(webpage, register):
     description_text = driver.find_elements_by_class_name('ng-star-inserted')
     register_opens = datetime.datetime.now()
     for texts in description_text:
-        if "Online-Einschreibungen können ab " in texts.text:
-            text = texts.text.split('Online-Einschreibungen können ab ')
+        if "Online-Einschreibungen" in texts.text:
+            text = texts.text.split('Online-Einschreibungen koennen ab ')
             register_opens = datetime.datetime.strptime(text[0:16], "%d.%m.%Y %H:%M")
             return register_opens
             break
