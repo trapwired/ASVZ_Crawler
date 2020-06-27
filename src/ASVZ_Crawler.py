@@ -7,6 +7,7 @@ import KEYS
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
+from selenium.webdriver.firefox.options import Options
 
 
 def page_has_loaded_id(browser, old_page):
@@ -19,14 +20,23 @@ def page_has_loaded_id(browser, old_page):
 def init_page(webpage, register):
     # get paths of geckodriver and Firefox exe
     # gecko = os.path.normpath(os.path.join(os.path.dirname(__file__), 'geckodriver'))
-    # binary = FirefoxBinary(r'C:\Program Files\Mozilla Firefox\firefox.exe')
+    # binary = ChromeBinary(r'/home/pi/Desktop/ASVZ_Crawler/chromedriver')
     # Using Firefox to access web
-    driver = webdriver.Chrome()
+    # driver = webdriver.Firefox()
     # Open the website
-    driver.get(webpage)
-    old_page = driver.find_element_by_tag_name('html')
+    # driver.get(webpage)
+    
     # do some magic, otherwise it wont work
     # driver.switch_to.default_content()
+
+    options = Options()
+    options.log.level = "trace"
+    options.add_argument("--headless")
+
+    # browser = webdriver.Firefox(firefox_options=options)
+    driver = webdriver.Firefox()
+    driver.get(webpage)
+    old_page = driver.find_element_by_tag_name('html')
 
     # while is escaped when moving to second page
     while not page_has_loaded_id(driver, old_page):
@@ -92,5 +102,17 @@ def init_page(webpage, register):
 
 
 if __name__ == "__main__":
-    init_page('https://schalter.asvz.ch/tn/lessons/116834', False)
+
+
+    options = Options()
+    options.log.level = "trace"
+    options.add_argument("--headless")
+
+    # browser = webdriver.Firefox(firefox_options=options)
+    browser = webdriver.Firefox()
+    browser.get('https://schalter.asvz.ch/tn/lessons/116834')
+
+    # driver = webdriver.Firefox()
+    # driver.get('www.google.com')
+    # init_page('https://schalter.asvz.ch/tn/lessons/116834', False)
 
